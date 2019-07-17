@@ -1,0 +1,30 @@
+package com.exam;
+
+public class Ex1 {
+
+	public static void main(String[] args) {
+		// 객체 생성
+		Point p = new Point();
+		System.out.println(p.x); //2
+		System.out.println(p.y); //2
+		p.printData(); //2, 2
+		
+		p.x = 10;
+		p.y = 20;
+		p.printData();
+		
+		
+		
+		
+		
+		System.out.println("================");
+		
+		Point p2 = new Point(300); //300,0
+		p2.printData();
+		
+		Point p3 = new Point(300, 400); //300,400
+		p3.printData();
+		
+	}
+
+}

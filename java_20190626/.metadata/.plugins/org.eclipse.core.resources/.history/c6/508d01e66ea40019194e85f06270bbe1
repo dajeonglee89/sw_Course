@@ -1,0 +1,32 @@
+package com.exam;
+
+public class Ex3 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		student student;
+		student = new student();
+		
+		student.hakbun = "190712";
+		student.name = 다정;
+		
+		
+		
+		
+		
+		
+		
+		boolean hakbun;
+		int name;
+		int kor;
+		int eng;
+		int math;
+		
+		
+		
+		
+		
+	}
+
+}

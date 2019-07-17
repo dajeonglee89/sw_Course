@@ -1,0 +1,32 @@
+package com.exam;
+
+public class Ex2 {
+	public static void methodA(int a) {
+		a = 11;
+	}
+
+	public static void methodB() {
+		
+	}
+	
+	public static void main(String[] args) {
+		int a = 10;
+		methodA(a);
+		System.out.println(a);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	}
+
+}
+

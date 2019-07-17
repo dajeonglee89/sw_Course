@@ -1,0 +1,22 @@
+package com.exam;
+
+public class dajeong3 {
+
+	public static void main(String[] args) {
+		// 4x4의 2차원 배열 / 1~10 랜덤수 생성 
+		
+		int[]num = new int[16];
+		
+		for(int a=0; a<num.length; a++) {
+			num[a] = (int)(Math.random()*10)+1;
+		}
+		System.out.println("랜덤정수 ");
+		 int haha = 0;
+		 for(int numnum : num) {
+			 System.out.print(numnum + " ");
+			 haha += num;
+		 }
+		 System.out.println();
+	}
+
+}

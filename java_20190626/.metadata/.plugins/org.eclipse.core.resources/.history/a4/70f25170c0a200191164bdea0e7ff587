@@ -1,0 +1,23 @@
+package com.exam;
+
+public class Ex3 {
+	public static int calc(String a, int b, int c) {
+		int d = 0;
+		if(a.equals("+")) {
+			d = b + c;
+		}else if(a.equals("-")) {
+			d = b - c;
+		}else if(a.equals("*")) {
+			d = b * c;
+		}else {
+			d = b / c;
+		}
+		return d;
+	}
+	
+	
+	public static void main(String[] args) {
+		System.out.println(calc("+",10,20));
+	}
+
+}

@@ -1,0 +1,12 @@
+package com.exam;
+
+public class Ex1 {
+
+	public static void main(String[] args) {
+		// 객체 생성
+		Point p = new Point();
+		System.out.println(p.x);
+		System.out.println(p.y);
+	}
+
+}

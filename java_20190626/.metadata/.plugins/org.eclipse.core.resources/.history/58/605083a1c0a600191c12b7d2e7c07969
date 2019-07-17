@@ -1,0 +1,70 @@
+package com.exam;
+// 생성자 오버로딩(중복정의) 규칙
+// 매개변수의 개수가 다르면 허용
+// 매개변수의 개수가 같을때는 매개변수 타입이 다르면 허용 
+
+
+public class Animal {
+ //필드(멤버변수)
+ //   문자열 name
+ //   정수형 age
+ 
+	String name;
+	int age;
+		
+ // 기본생성자
+ //   동물이름은 강아지, 나이는 3살로 초기화
+	
+	
+	Animal(){
+		name = "강아지";
+		age = 3;
+	}
+		
+ // name받아서 초기화하는 생성자. age는 1살.
+ 
+	 Animal(String _name){
+		 name = _name;
+		 age = 31;
+	 }
+		
+ // age받아서 초기화하는 생성자 . name은 강아지.
+	
+	 Animal(int _age){
+		 age = _age;
+	 }
+	 	 
+ // name과 age받아서 초기화하는 생성자.
+	
+	 Animal(String _name, int _age){
+		 name = _name; 
+		 age = _age;
+	 }
+	 
+	 
+	 
+	 
+	 
+ // 각 필드별 setter, getter 메서드 만들기
+	 
+	 void setAge(int _age) {
+		 if (_age < 0) {
+			 age = 0;
+		 }else {
+			 age = _age;
+		 }
+	 }
+	 
+	 int getAge() {
+		 return age;
+	 }
+	
+ // 메서드 run() -> 출력 "age살 name(이)가 뛴다"
+	
+	 void run() {
+		 System.out.println(age + "살" + name + "(이)가 뛴다. ");
+	 }
+	 
+	 
+	 
+}

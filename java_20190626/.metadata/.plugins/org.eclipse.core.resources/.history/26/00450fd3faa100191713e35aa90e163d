@@ -1,0 +1,33 @@
+package com.exam;
+
+public class Ex3 {
+	public static int hello(int a, int b) {
+		
+		return a + b;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static void main(String[] args) {
+
+	System.out.println(hello(10, 20));
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	}
+
+}

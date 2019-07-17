@@ -1,0 +1,32 @@
+package com.exam;
+
+public class Ex2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		
+		
+		
+		Animal 동물1=new Animal();
+		동물1.run();
+		Animal 동물2=new Animal("다정");
+		동물2.run();
+		Animal 동물3=new Animal(31);
+		동물3.run();
+		Animal 동물4=new Animal("다정", 31);
+		동물4.run();
+		
+		
+		
+		
+		TV myTV = new TV("LG", 2017, 32);
+		myTV.show();
+		
+		
+		
+		
+		
+	}//main
+
+}

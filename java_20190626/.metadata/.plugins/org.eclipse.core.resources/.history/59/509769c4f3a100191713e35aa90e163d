@@ -1,0 +1,29 @@
+package com.exam;
+
+public class Ex2 {
+	//입력 매개변수 x 리턴값 x
+	public static void star() {
+		System.out.println("*****");
+		System.out.println("*★★★*");
+		System.out.println("*****");
+	}
+	//입력 매개변수 o 리턴값 x
+	public static void star2(int a) {
+		System.out.println("받은값 : " + a);
+		System.out.println("*★★★*");
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("홍길동");
+		star();
+	
+	
+	
+	
+	
+	
+	
+	
+	}
+
+}
