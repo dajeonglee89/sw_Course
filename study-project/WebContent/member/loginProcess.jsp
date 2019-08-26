@@ -22,7 +22,7 @@
     // check == -1 아이디없음. 뒤로이동
     // int check = memberDao.userCheck(id,passwd);
     
-int check = memberDao.loginCheck(id, passwd);
+	int check = memberDao.userCheck(id, passwd);
 
 
     if(check == 1){ //로그인성공일때
