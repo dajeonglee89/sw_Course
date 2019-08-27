@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+function calc(){
+	var inputX = document.getElementById('x');
+	var strX = inputX.value; //String
+	var strY = document.getElementById('y').value;
+	
+	var sum;
+	sum = parseInt(strX) + parseInt(strY);
+	
+	document.getElementById('sum').value = sum;
+	
+}
+</script>
+</head>
+<body>
+	<h3>덧셈 계산기</h3>
+	첫번째 정수 :
+	<input id="x" value="">
+	<br> 두번째 정수 :
+	<input id="y" value="">
+	<br> 합계 :
+	<input id="sum" value="">
+	<br>
+	<button type="button" onclick="calc();">계산</button>
+	
+	
+	
+	
+
+</body>
+</html>

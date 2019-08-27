@@ -43,7 +43,7 @@
   
 	<article>
 		<h1>Login</h1>
-		<form action="" id="join">
+		<form action="loginProcess.jsp" method="post" id="join">
 			<fieldset>
 				<legend>Login Info</legend>
 				<label>User ID</label>
@@ -54,8 +54,8 @@
 			
 			<div class="clear"></div>
 			<div id="buttons">
-				<input type="button" value="Submit" class="submit">
-				<input type="button" value="Cancel" class="cancel">
+				<input type="Submit" value="로그인" class="submit">
+				<input type="reset" value="초기화" class="cancel">
 			</div>
 		</form>
 	</article>

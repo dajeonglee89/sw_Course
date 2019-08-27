@@ -56,7 +56,7 @@
 				type="radio" name="gender" value="남" />남자 
 				<input type="radio"
 				name="gender" value="여" />여자 <br> 
-				이메일 : <input type="email"
+			이메일 : <input type="email"
 				name="email" /> <br>
 		</fieldset>
 

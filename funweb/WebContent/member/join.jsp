@@ -77,6 +77,7 @@ function winOpen(){
 	//부모-자식관계가 있음. 
 	//자식창 데이터를 부모창으로 가져올수있음.
 	var childWindow = window.open('joinIdDupCheck.jsp?userid=' + inputId,'','width=400,height=300');
+	//childWindow.document.write('입력한 아이디: ' + inputId + '<br>');
 }
 
 

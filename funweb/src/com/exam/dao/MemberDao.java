@@ -8,7 +8,7 @@ import com.exam.vo.MemberVO;
 
 
 public class MemberDao {
-   // DB 접속정보
+   // DB �젒�냽�젙蹂�
    String url = "jdbc:oracle:thin:@localhost:1521:XE";
    String user = "scott";
    String password = "tiger";
@@ -21,6 +21,42 @@ public class MemberDao {
 
    private MemberDao() {
    }
+   
+   //아이디중복확인 
+   public boolean isIdDuplicated(String id) {
+	   //중복이면 true, 중복아니면 false
+	   boolean isIdDuplicated = false;
+	   int count = 0; //id값이 일치하는 행의 개수 
+	   
+	   Connection con = null;
+	   PreparedStatement pstmt = null;
+	   ResultSet rs = null;
+	   String sql = "";
+	   
+	   try {
+		con = DBManager.getConnection();
+		sql = "SELECT COUNT(*) AS cnt FROM member WHERE id = ?";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, id);
+		
+		rs = pstmt.executeQuery();
+		
+		rs.next(); //커서옮기기
+		count = rs.getInt(1);
+		if(count == 1) {
+			isIdDuplicated = true; //중복이다
+		}else { //count == 0
+			isIdDuplicated = false; //중복아니다 
+		}
+	} catch (Exception e) {
+
+		e.printStackTrace();
+	}finally {
+		DBManager.close(con, pstmt, rs);
+	}
+	   	   
+	   return isIdDuplicated;
+   }
 
    public int insertMember(MemberVO vo) {
 
@@ -30,18 +66,19 @@ public class MemberDao {
 
       try {
          con = DBManager.getConnection();
-         // 3단계: sql문 준비
-         String sql = "INSERT INTO member (id, passwd, name, age, gender, email, reg_date)";
-         sql += " VALUES (?,?,?,?,?,?,?)";
+         // 3�떒怨�: sql臾� 以�鍮�
+         String sql = "INSERT INTO member (id, passwd, name, email, address, tel, mtel, reg_date)";
+         sql += " VALUES (?,?,?,?,?,?,?,?)";
          pstmt = con.prepareStatement(sql);
          pstmt.setString(1, vo.getId());
          pstmt.setString(2, vo.getPasswd());
          pstmt.setString(3, vo.getName());
-         pstmt.setInt(4, vo.getAge());
-         pstmt.setString(5, vo.getGender());
-         pstmt.setString(6, vo.getEmail());
-         pstmt.setTimestamp(7, vo.getRegDate());
-         // 4단계: sql문 실행
+         pstmt.setString(4, vo.getEmail());
+         pstmt.setString(5, vo.getAddress());
+         pstmt.setString(6, vo.getTel());
+         pstmt.setString(7, vo.getMtel());
+         pstmt.setTimestamp(8, vo.getRegDate());
+         // 4�떒怨�: sql臾� �떎�뻾
          rowCount = pstmt.executeUpdate();
       } catch (Exception e) {
          e.printStackTrace();
@@ -85,9 +122,9 @@ public class MemberDao {
          sql = "SELECT * FROM member WHERE id = ?";
          pstmt = con.prepareStatement(sql);
          pstmt.setString(1, id);
-         //4단계: sql문 실행
+         //4�떒怨�: sql臾� �떎�뻾
          rs = pstmt.executeQuery();
-         //5단계: rs 데이터 사용
+         //5�떒怨�: rs �뜲�씠�꽣 �궗�슜
          if (rs.next()) {
             memberVO = new MemberVO();
             
@@ -95,12 +132,12 @@ public class MemberDao {
             memberVO.setPasswd(rs.getString("passwd"));
             memberVO.setName(rs.getString("name"));
             
-            // rs.getInt("age"); 숫자값이 null이 아니고 항상 존재할 때
+            // rs.getInt("age"); �닽�옄媛믪씠 null�씠 �븘�땲怨� �빆�긽 議댁옱�븷 �븣
             String strAge = rs.getString("age");
             if (strAge != null) {
-               memberVO.setAge(Integer.parseInt(strAge));
+
             }
-            memberVO.setGender(rs.getString("gender"));
+
             memberVO.setEmail(rs.getString("email"));
             memberVO.setRegDate(rs.getTimestamp("reg_date"));
          }
@@ -116,7 +153,7 @@ public class MemberDao {
    
    
    public int userCheck(String id, String passwd) {
-      // -1 아이디 불일치. 0 패스워드 불일치. 1 일치함
+      // -1 �븘�씠�뵒 遺덉씪移�. 0 �뙣�뒪�썙�뱶 遺덉씪移�. 1 �씪移섑븿
       int check = -1; 
       
       Connection con = null;
@@ -126,25 +163,25 @@ public class MemberDao {
       try {
          con = DBManager.getConnection();
          
-         //3단계: sql문 준비
+         //3�떒怨�: sql臾� 以�鍮�
          String sql = "SELECT passwd FROM member WHERE id = ?";
          pstmt = con.prepareStatement(sql);
          pstmt.setString(1, id);
-         //4단계: sql문 실행
+         //4�떒怨�: sql臾� �떎�뻾
          rs = pstmt.executeQuery();
-         //5단계: rs 데이터 사용
-//            rs데이터(행)이 있으면 아이디 있음
-//                           패스워드비교 맞으면 로그인인증(세션값 생성)
-//                                     틀리면 패스워드틀림.뒤로가기
-//                        없으면 아이디 없음.뒤로가기
-         if (rs.next()) { // 아이디 있음
+         //5�떒怨�: rs �뜲�씠�꽣 �궗�슜
+//            rs�뜲�씠�꽣(�뻾)�씠 �엳�쑝硫� �븘�씠�뵒 �엳�쓬
+//                           �뙣�뒪�썙�뱶鍮꾧탳 留욎쑝硫� 濡쒓렇�씤�씤利�(�꽭�뀡媛� �깮�꽦)
+//                                     ��由щ㈃ �뙣�뒪�썙�뱶��由�.�뮘濡쒓�湲�
+//                        �뾾�쑝硫� �븘�씠�뵒 �뾾�쓬.�뮘濡쒓�湲�
+         if (rs.next()) { // �븘�씠�뵒 �엳�쓬
             if (passwd.equals(rs.getString("passwd"))) {
-               check = 1; // 아이디, 패스워드 일치
+               check = 1; // �븘�씠�뵒, �뙣�뒪�썙�뱶 �씪移�
             } else { 
-               check = 0; // 패스워드 불일치
+               check = 0; // �뙣�뒪�썙�뱶 遺덉씪移�
             }
          } else { 
-            check = -1; // 아이디 없음
+            check = -1; // �븘�씠�뵒 �뾾�쓬
          }
       } catch (Exception e) {
          e.printStackTrace();
@@ -156,7 +193,7 @@ public class MemberDao {
    
    
    
-   // 전체회원정보 가져오기
+   // �쟾泥댄쉶�썝�젙蹂� 媛��졇�삤湲�
    public List<MemberVO> getMembers() {
       List<MemberVO> list = new ArrayList<MemberVO>();
       
@@ -166,29 +203,29 @@ public class MemberDao {
       String sql = "";
       
       try {
-         //1단계: DB 드라이버 로딩
-         //2단계: DB 연결
+         //1�떒怨�: DB �뱶�씪�씠踰� 濡쒕뵫
+         //2�떒怨�: DB �뿰寃�
          con = DBManager.getConnection();
-         //3단계: sql문 준비
+         //3�떒怨�: sql臾� 以�鍮�
          sql = "SELECT * FROM member ORDER BY id ASC";
          stmt = con.createStatement();
-         //4단계: sql문 실행 -> rs 생성
+         //4�떒怨�: sql臾� �떎�뻾 -> rs �깮�꽦
          rs = stmt.executeQuery(sql);
-         //5단계: while문   rs.next() 다음행이 있으면
-         //      자바빈객체 생성 MemberVO 생성 <- rs 행 1개 저장
-         //      자바빈 한개 -> 배열리스트에 추가
+         //5�떒怨�: while臾�   rs.next() �떎�쓬�뻾�씠 �엳�쑝硫�
+         //      �옄諛붾퉰媛앹껜 �깮�꽦 MemberVO �깮�꽦 <- rs �뻾 1媛� ���옣
+         //      �옄諛붾퉰 �븳媛� -> 諛곗뿴由ъ뒪�듃�뿉 異붽�
          while (rs.next()) {
             MemberVO memberVO = new MemberVO();
             memberVO.setId(rs.getString("id"));
             memberVO.setPasswd(rs.getString("passwd"));
             memberVO.setName(rs.getString("name"));
             
-            // rs.getInt("age"); 숫자값이 null이 아니고 항상 존재할 때
+            // rs.getInt("age"); �닽�옄媛믪씠 null�씠 �븘�땲怨� �빆�긽 議댁옱�븷 �븣
             String strAge = rs.getString("age");
             if (strAge != null) {
-               memberVO.setAge(Integer.parseInt(strAge));
+
             }
-            memberVO.setGender(rs.getString("gender"));
+
             memberVO.setEmail(rs.getString("email"));
             memberVO.setRegDate(rs.getTimestamp("reg_date"));
             
@@ -203,11 +240,11 @@ public class MemberDao {
    } // getMembers method
    
 
-   // 회원정보 수정하기 메소드
-   // 매개변수 memberVO에 passwd필드는 수정의 대상이 아니라
-   // 본인 확인 용도로 사용
+   // �쉶�썝�젙蹂� �닔�젙�븯湲� 硫붿냼�뱶
+   // 留ㅺ컻蹂��닔 memberVO�뿉 passwd�븘�뱶�뒗 �닔�젙�쓽 ���긽�씠 �븘�땲�씪
+   // 蹂몄씤 �솗�씤 �슜�룄濡� �궗�슜
    public int updateMember(MemberVO memberVO) {
-      int result = 0; // 1 수정성공, 0 수정실패
+      int result = 0; // 1 �닔�젙�꽦怨�, 0 �닔�젙�떎�뙣
       
       Connection con = null;
       PreparedStatement pstmt = null;
@@ -216,34 +253,34 @@ public class MemberDao {
       String sql = "";
       
       try {
-         //1단계: DB 드라이버 로딩
-         //2단계: DB 연결
+         //1�떒怨�: DB �뱶�씪�씠踰� 濡쒕뵫
+         //2�떒怨�: DB �뿰寃�
          con = DBManager.getConnection();
-         //3단계: sql문 준비
+         //3�떒怨�: sql臾� 以�鍮�
          sql ="SELECT passwd FROM member WHERE id = ?";
          pstmt = con.prepareStatement(sql);
          pstmt.setString(1, memberVO.getId());
-         //4단계: sql문 실행 -> rs 생성
+         //4�떒怨�: sql臾� �떎�뻾 -> rs �깮�꽦
          rs = pstmt.executeQuery();
-         //5단계: rs 사용
+         //5�떒怨�: rs �궗�슜
          if (rs.next()) {
             if (memberVO.getPasswd().equals(rs.getString("passwd"))) {
-               pstmt.close(); // SELECT문 수행한 pstmt 닫기
+               pstmt.close(); // SELECT臾� �닔�뻾�븳 pstmt �떕湲�
                 
                sql = "UPDATE member SET name=?, age=?, gender=?, email=? WHERE id=?";
                pstmt = con.prepareStatement(sql);
                pstmt.setString(1, memberVO.getName());
-               pstmt.setObject(2, memberVO.getAge()); // age필드값이 null일수 있으면
-               //pstmt.setInt(2, memberVO.getAge()); // age필드값이 항상
-               pstmt.setString(3, memberVO.getGender());
+
+               //pstmt.setInt(2, memberVO.getAge()); // age�븘�뱶媛믪씠 �빆�긽
+
                pstmt.setString(4, memberVO.getEmail());
                pstmt.setString(5, memberVO.getId());
-               // 실행
+               // �떎�뻾
                pstmt.executeUpdate();
                
                result = 1;
             } else {
-               result = 0; // 패스워드 불일치로 수정실패를 의미함
+               result = 0; // �뙣�뒪�썙�뱶 遺덉씪移섎줈 �닔�젙�떎�뙣瑜� �쓽誘명븿
             }
          }
          

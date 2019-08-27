@@ -1,52 +1,27 @@
 <%@page import="java.sql.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-// 한글처리
-request.setCharacterEncoding("utf-8");
-//파라미터값 가져오기
-String id = request.getParameter("id");
-String passwd = request.getParameter("passwd");
-String name = request.getParameter("name");
 
-//나이 입력은 텍스트 상자이므료 null이 아닌 빈문자열로 넘어옴
-String strAge = request.getParameter("age");
-int age = 0;
-if (strAge != null && !strAge.equals("")){ //"22"
-	age = Integer.parseInt(strAge); // "22" -> 22 문자열이 숫자로 바뀜
-}
+<%-- post 파라미터값 한글처리 --%> 
+<% request.setCharacterEncoding("utf-8"); %>
 
-String gender = request.getParameter("gender");
-String email = request.getParameter("email");
-//현재날짜생성(회원가입날짜)
-Timestamp regDate = new Timestamp(System.currentTimeMillis());
+<%-- 액션태그로 자바빈 객체 생성--%>
+<jsp:useBean id="memberVO" class="com.exam.vo.MemberVO"/>
 
-//DB접속정보
-String url = "jdbc:oracle:thin:@localhost:1521:xe";
-String user = "scott";
-String password = "tiger";
+<%-- 액션태그로 파라미터값 찾아서 자바빈 객체에 저장--%>
+<jsp:setProperty property="*" name="memberVO"/>
 
-//1단계: DB 드라이버 로딩
-Class.forName("oracle.jdbc.OracleDriver");
-//2단계: DB연결
-Connection con = DriverManager.getConnection(url, user, password);
-//3단계: sql문 준비해서 실행
-String sql = "INSERT INTO member (id,passwd,name,age,gender,email,reg_date)";
-sql += "VALUES (?,?,?,?,?,?,?)";
-PreparedStatement pstmt = con.prepareStatement(sql);
-pstmt.setString(1, id);
-pstmt.setString(2, passwd);
-pstmt.setString(3, name);
-pstmt.setInt(4, age);
-pstmt.setString(5, gender);
-pstmt.setString(6, email);
-pstmt.setTimestamp(7, regDate);
-//4단계: 실행
-int rowCount = pstmt.executeUpdate();
-%>
-<script>
-alert('회원가입성공 - <%=rowCount %>');
-location.href='loginForm.jsp'; //이동
-</script>
+<%-- 가입날짜 생성해서 채우기 --%>
+<% memberVO.setRegDate(new Timestamp(System.currentTimeMillis())); %>
 
+
+<%-- 액션태그로 자바빈 값 각각 출력 --%>
+
+아이디: <jsp:getProperty property="id" name="memberVO"/><br>
+패스워드:<jsp:getProperty property="passwd" name="memberVO"/><br>
+이름:<jsp:getProperty property="name" name="memberVO"/><br>
+나이:<jsp:getProperty property="age" name="memberVO"/><br>
+성별:<jsp:getProperty property="gender" name="memberVO"/><br>
+이메일:<jsp:getProperty property="email" name="memberVO"/><br>
+가입날짜: <jsp:getProperty property="regDate" name="memberVO"/><br>
 

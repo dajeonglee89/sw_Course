@@ -1,0 +1,12 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+
+Label#label1{
+	-fx-font-family: "¸¼Àº°íµñ";
+	-fx-font-size: 24pt;
+	-fx-font-style: italic;
+}
+
+Buttom{
+	-fx-background-color: beige; 
+}
