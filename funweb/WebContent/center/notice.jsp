@@ -40,17 +40,10 @@
   <div class="clear"></div>
 <div id="sub_img_center"></div>
 <div class="clear"></div>
-  <nav id="sub_menu">
-    
-        <ul>
-            <li> <a href="#">Notice</a></li>
-            <li> <a href="#">Public News</a></li>
-            <li> <a href="#">Driver Download</a></li>
-            <li> <a href="#">Service Policy</a></li>
-    	</ul>   
-    
-    
-    </nav>
+
+<%-- nav 영역 --%>
+<jsp:include page="../include/nav_center.jsp"/>
+
 <article>
     
 <h1>Notice</h1>
@@ -169,6 +162,10 @@
     <td>150</td>
   </tr>                   
 </table>
+
+<div id="table_search">
+	<input type="button" value="글쓰기" class="btn" onclick="location.href='write.jsp';">
+</div>
 
 <div id="table_search">
 <input name="" type="text" class="input_box"> <input type="button" value="Search" class="btn">

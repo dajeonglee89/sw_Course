@@ -1,8 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    <%
+   String id = null;
+   
+   //쿠키찾기
+   Cookie[] cookies= request.getCookies();
+   if(cookies != null){
+	   for(Cookie cookie : cookies){
+		   if(cookie.getName().equals("id")){
+			  id = cookie.getValue();
+			  //세션에 쿠키값을 저장
+			  session.setAttribute("id", id);
+		   }
+	   }
+   }
+   
+   
    //세션값 가져오기 "id"
-   String id = (String) session.getAttribute("id");
+   id = (String) session.getAttribute("id");
    %> 
     
  <header>

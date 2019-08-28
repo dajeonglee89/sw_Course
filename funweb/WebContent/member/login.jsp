@@ -49,7 +49,9 @@
 				<label>User ID</label>
 				<input type="text" name="id"><br>
 				<label>Password</label>
-				<input type="password" name="pass"><br>
+				<input type="password" name="passwd"><br>
+				<label>Remember Me</label>
+				<input type="checkbox" name="rememberMe" value="true">
 			</fieldset>
 			
 			<div class="clear"></div>
